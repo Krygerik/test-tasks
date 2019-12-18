@@ -3,6 +3,10 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
+button, textarea {
+  font-family: 'Montserrat', sans-serif;
+}
+
 .main {
   display: flex;
   flex-direction: column;
