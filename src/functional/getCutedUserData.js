@@ -22,6 +22,6 @@ export default function getCutedUserData (inputData) {
   return {
     fio: !!CUTED_DATE ? CUTED_DATE[0] : null,
     date: !!CUTED_FIO ? CUTED_FIO[0] : null,
-    error: !CUTED_DATE && !CUTED_FIO
+    error: !CUTED_DATE || !CUTED_FIO
   }
 }
