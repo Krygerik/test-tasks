@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import getCutedUserData from '../functional/getCutedUserData';
+import { InputUserData } from './InputUserData';
+import '../styles/CompareUserData.css';
 
 /**
  * @description
@@ -72,22 +74,30 @@ export class CompareUserData extends Component {
     } = this.state;
 
     return (
-      <div>
-        <label htmlFor="firstInputData">Первый ввод</label>
-        <input id="firstInputData" onChange={this.saveFirstData} />
-        { isNotValidFirstValue && <span>Введено недостаточно данных для сравнения</span>}
-        
-        <label htmlFor="secondInputData">Второй ввод</label>
-        <input id="secondInputData" onChange={this.saveSecondData} />
-        { isNotValidSecondValue && <span>Введено недостаточно данных для сравнения</span>}
-
-        <button onClick={this.handlerCompareData}>Сравнить введенные данные!</button>
+      <div className="task">
+        <span className="title-task">Задание 1</span>
+        <InputUserData id="firstInputData"
+                      label="Первый ввод"
+                      onChange={this.saveFirstData}
+                      isNotValid={isNotValidFirstValue}
+        />
+        <InputUserData id="secondInputData"
+                      label="Второй ввод"
+                      onChange={this.saveSecondData}
+                      isNotValid={isNotValidSecondValue}
+        />
 
         { (isEqualUserData !== undefined) 
             && (isEqualUserData
-              ? <span>Введенные значения равны!</span>
-              : <span>Введенные значения не равны!</span>)
+              ? <span className="successCompare">Введенные значения равны!</span>
+              : <span className="errorCompare">Введенные значения не равны!</span>)
         }
+
+        <button onClick={this.handlerCompareData}
+                className="btnCompare"
+                >
+                Сравнить введенные данные!
+        </button>
       </div>
     );
   }

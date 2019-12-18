@@ -1,0 +1,15 @@
+.checkFormatTextarea {
+  width: 100%;
+  height: 150px;
+}
+
+.errorCheckFormat {
+  margin-bottom: 10px;
+  color: red;
+  font-size: 15px;
+}
+
+.successCheckFormat {
+  margin-bottom: 10px;
+  color: green;
+}

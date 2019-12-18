@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import getCutedUserData from '../functional/getCutedUserData';
+import '../styles/CheckFormatUserData.css';
 
 /**
  * @description
@@ -29,16 +30,19 @@ export class CheckFormatUserData extends Component {
     const { isNotValid } = this.state;
 
     return (
-      <div>
-        <textarea placeholder="Я не понял, что от меня требуется сделать в этом заданииииии"
-                  onChange={this.handlerChangeTextarea}/>
+      <div className="task">
+        <span className="title-task">Задание 2</span>
         { (isNotValid !== undefined) 
             && (
               isNotValid
-                ? <span>Значение не соответствует формату пользовательских данных</span>
-                : <span>Значение соответствует формату пользовательских данных</span>
+                ? <span className="errorCheckFormat">Значение не соответствует формату пользовательских данных</span>
+                : <span className="successCheckFormat">Значение соответствует формату пользовательских данных</span>
             )
         }
+        <textarea placeholder="Я не понял, что от меня требуется сделать в этом заданииииии"
+                  onChange={this.handlerChangeTextarea}
+                  className="checkFormatTextarea"
+        />
       </div>
     )
   }
