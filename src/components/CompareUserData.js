@@ -18,14 +18,10 @@ export class CompareUserData extends Component {
       isNotValidFirstValue: false,
       isNotValidSecondValue: false,
       isEqualUserData: undefined
-    },
-
-    this.handlerCompareData = this.handlerCompareData.bind(this);
-    this.saveFirstData = this.saveFirstData.bind(this);
-    this.saveSecondData = this.saveSecondData.bind(this);
+    }
   }
 
-  handlerCompareData () {
+  handlerCompareData = () => {
     const { firstUserData, secondUserData } = this.state;
 
     const {
@@ -52,14 +48,14 @@ export class CompareUserData extends Component {
     }
   }
 
-  saveFirstData (event) {
+  saveFirstData = (event) => {
     this.setState({
       firstUserData: event.target.value,
       isNotValidFirstValue: false
     })
   }
 
-  saveSecondData (event) {
+  saveSecondData = (event) => {
     this.setState({
       secondUserData: event.target.value,
       isNotValidSecondValue: false

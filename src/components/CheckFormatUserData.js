@@ -13,12 +13,11 @@ export class CheckFormatUserData extends Component {
     super();
     this.state = {
       isNotValid: undefined
-    },
-
-    this.handlerChangeTextarea = this.handlerChangeTextarea.bind(this);
+    }
   }
 
-  handlerChangeTextarea (event) {
+
+  handlerChangeTextarea = (event) => {
     const { error } = getCutedUserData(event.target.value);
     
     this.setState({
