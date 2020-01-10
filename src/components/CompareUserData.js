@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import getCutedUserData from '../functional/getCutedUserData';
-import { InputUserData } from './InputUserData';
-import '../styles/CompareUserData.css';
+import React, { Component } from 'react'
+import getCutedUserData from '../functional/getCutedUserData'
+import { InputUserData } from './InputUserData'
+import '../styles/CompareUserData.css'
 
 /**
  * @description
@@ -11,54 +11,54 @@ import '../styles/CompareUserData.css';
  */
 export class CompareUserData extends Component {
   constructor() {
-    super();
+    super()
     this.state = {
       firstUserData: '',
       secondUserData: '',
       isNotValidFirstValue: false,
       isNotValidSecondValue: false,
-      isEqualUserData: undefined
+      isEqualUserData: undefined,
     }
   }
 
   handlerCompareData = () => {
-    const { firstUserData, secondUserData } = this.state;
+    const { firstUserData, secondUserData } = this.state
 
     const {
       fio: firstFio,
       date: firstDate,
-      error: firstError
-    } = getCutedUserData(firstUserData);
+      error: firstError,
+    } = getCutedUserData(firstUserData)
 
     const {
       fio: secondFio,
       date: secondDate,
-      error: secondError
-    } = getCutedUserData(secondUserData);
+      error: secondError,
+    } = getCutedUserData(secondUserData)
 
     this.setState({
       isNotValidFirstValue: firstError,
-      isNotValidSecondValue: secondError
+      isNotValidSecondValue: secondError,
     })
-    
+
     if (!firstError && !secondError) {
       this.setState({
-        isEqualUserData: (firstFio === secondFio && firstDate === secondDate)
+        isEqualUserData: firstFio === secondFio && firstDate === secondDate,
       })
     }
   }
 
-  saveFirstData = (event) => {
+  saveFirstData = event => {
     this.setState({
       firstUserData: event.target.value,
-      isNotValidFirstValue: false
+      isNotValidFirstValue: false,
     })
   }
 
-  saveSecondData = (event) => {
+  saveSecondData = event => {
     this.setState({
       secondUserData: event.target.value,
-      isNotValidSecondValue: false
+      isNotValidSecondValue: false,
     })
   }
 
@@ -66,35 +66,36 @@ export class CompareUserData extends Component {
     const {
       isNotValidFirstValue,
       isNotValidSecondValue,
-      isEqualUserData
-    } = this.state;
+      isEqualUserData,
+    } = this.state
 
     return (
       <div className="task">
         <span className="title-task">Задание 1</span>
-        <InputUserData id="firstInputData"
-                      label="Первый ввод"
-                      onChange={this.saveFirstData}
-                      isNotValid={isNotValidFirstValue}
+        <InputUserData
+          id="firstInputData"
+          label="Первый ввод"
+          onChange={this.saveFirstData}
+          isNotValid={isNotValidFirstValue}
         />
-        <InputUserData id="secondInputData"
-                      label="Второй ввод"
-                      onChange={this.saveSecondData}
-                      isNotValid={isNotValidSecondValue}
+        <InputUserData
+          id="secondInputData"
+          label="Второй ввод"
+          onChange={this.saveSecondData}
+          isNotValid={isNotValidSecondValue}
         />
 
-        { (isEqualUserData !== undefined) 
-            && (isEqualUserData
-              ? <span className="successCompare">Введенные значения равны!</span>
-              : <span className="errorCompare">Введенные значения не равны!</span>)
-        }
+        {isEqualUserData !== undefined &&
+          (isEqualUserData ? (
+            <span className="successCompare">Введенные значения равны!</span>
+          ) : (
+            <span className="errorCompare">Введенные значения не равны!</span>
+          ))}
 
-        <button onClick={this.handlerCompareData}
-                className="btnCompare"
-                >
-                Сравнить введенные данные!
+        <button onClick={this.handlerCompareData} className="btnCompare">
+          Сравнить введенные данные!
         </button>
       </div>
-    );
+    )
   }
 }

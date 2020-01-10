@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import getCutedUserData from '../functional/getCutedUserData';
-import '../styles/CheckFormatUserData.css';
+import React, { Component } from 'react'
+import getCutedUserData from '../functional/getCutedUserData'
+import '../styles/CheckFormatUserData.css'
 
 /**
  * @description
@@ -10,37 +10,40 @@ import '../styles/CheckFormatUserData.css';
  */
 export class CheckFormatUserData extends Component {
   constructor() {
-    super();
+    super()
     this.state = {
-      isNotValid: undefined
+      isNotValid: undefined,
     }
   }
 
+  handlerChangeTextarea = event => {
+    const { error } = getCutedUserData(event.target.value)
 
-  handlerChangeTextarea = (event) => {
-    const { error } = getCutedUserData(event.target.value);
-    
     this.setState({
-      isNotValid: error
+      isNotValid: error,
     })
   }
 
   render() {
-    const { isNotValid } = this.state;
+    const { isNotValid } = this.state
 
     return (
       <div className="task">
         <span className="title-task">Задание 2</span>
-        { (isNotValid !== undefined) 
-            && (
-              isNotValid
-                ? <span className="errorCheckFormat">Значение не соответствует формату пользовательских данных</span>
-                : <span className="successCheckFormat">Значение соответствует формату пользовательских данных</span>
-            )
-        }
-        <textarea placeholder="Я не понял, что от меня требуется сделать в этом заданииииии"
-                  onChange={this.handlerChangeTextarea}
-                  className="checkFormatTextarea"
+        {isNotValid !== undefined &&
+          (isNotValid ? (
+            <span className="errorCheckFormat">
+              Значение не соответствует формату пользовательских данных
+            </span>
+          ) : (
+            <span className="successCheckFormat">
+              Значение соответствует формату пользовательских данных
+            </span>
+          ))}
+        <textarea
+          placeholder="Я не понял, что от меня требуется сделать в этом заданииииии"
+          onChange={this.handlerChangeTextarea}
+          className="checkFormatTextarea"
         />
       </div>
     )

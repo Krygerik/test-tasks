@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { CompareUserData } from "./CompareUserData";
-import { CheckFormatUserData } from "./CheckFormatUserData";
-import '../styles/App.css';
+import React, { Component } from 'react'
+import { CompareUserData } from './CompareUserData'
+import { CheckFormatUserData } from './CheckFormatUserData'
+import '../styles/App.css'
 
 class App extends Component {
   render() {
@@ -13,8 +13,8 @@ class App extends Component {
         <CompareUserData />
         <CheckFormatUserData />
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
