@@ -25,7 +25,7 @@ export class InputUserData extends Component {
 }
 
 InputUserData.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   isNotValid: PropTypes.bool.isRequired,

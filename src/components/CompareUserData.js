@@ -1,65 +1,64 @@
 import React, { Component } from 'react'
-import getCutedUserData from '../functional/getCutedUserData'
-import { InputUserData } from './InputUserData'
+import PropTypes from 'prop-types'
+import { InputUserData } from '../components/InputUserData'
 import '../styles/CompareUserData.css'
 
-/**
- * @description
- * Компонент для сравнения данных в 2 полях ввода.
- * Сравниваемые данные: "имя фамилия" и "дата рождения" в формате dd.mm.yyyy
- * Порядок данных не учитывается, как и все прочие символы
- */
 export class CompareUserData extends Component {
-  constructor() {
-    super()
-    this.state = {
-      firstUserData: '',
-      secondUserData: '',
-      isNotValidFirstValue: false,
-      isNotValidSecondValue: false,
-      isEqualUserData: undefined,
+  /**
+   * @description
+   * Функция для поиска и взятия даты и фио из переданной строки.
+   * Также валидирует строку на наличие данных аттрибутов
+   * @param {string} inputData
+   */
+  getCutedUserData = inputData => {
+    const RegExp_DATE = /\d{2}.\d{2}.\d{4}/
+    const RegExp_FIO = /[а-яА-Я]+ [а-яА-Я]+ [а-яА-Я]+/
+
+    const CUTED_DATE = inputData.match(RegExp_DATE)
+    const CUTED_FIO = inputData.match(RegExp_FIO)
+
+    return {
+      fio: CUTED_DATE ? CUTED_DATE[0] : null,
+      date: CUTED_FIO ? CUTED_FIO[0] : null,
+      error: !CUTED_DATE || !CUTED_FIO,
     }
   }
 
   handlerCompareData = () => {
-    const { firstUserData, secondUserData } = this.state
+    const {
+      firstValue,
+      secondValue,
+      changeFirstValidStatus,
+      changeSecondValidStatus,
+      changeStatusComparison,
+    } = this.props
 
     const {
       fio: firstFio,
       date: firstDate,
       error: firstError,
-    } = getCutedUserData(firstUserData)
+    } = this.getCutedUserData(firstValue)
 
     const {
       fio: secondFio,
       date: secondDate,
       error: secondError,
-    } = getCutedUserData(secondUserData)
+    } = this.getCutedUserData(secondValue)
 
-    this.setState({
-      isNotValidFirstValue: firstError,
-      isNotValidSecondValue: secondError,
-    })
+    changeFirstValidStatus(firstError)
+    changeSecondValidStatus(secondError)
 
     if (!firstError && !secondError) {
-      this.setState({
-        isEqualUserData: firstFio === secondFio && firstDate === secondDate,
-      })
+      changeStatusComparison(firstFio === secondFio && firstDate === secondDate)
     }
   }
 
-  saveFirstData = event => {
-    this.setState({
-      firstUserData: event.target.value,
-      isNotValidFirstValue: false,
-    })
+  saveFirstValue = event => {
+    this.props.changeFirstUserData(event.target.value)
   }
 
-  saveSecondData = event => {
-    this.setState({
-      secondUserData: event.target.value,
-      isNotValidSecondValue: false,
-    })
+  saveSecondValue = event => {
+    this.props.changeSecondUserData(event.target.value)
   }
 
   render() {
@@ -67,21 +66,25 @@ export class CompareUserData extends Component {
       isNotValidFirstValue,
       isNotValidSecondValue,
       isEqualUserData,
-    } = this.state
+    } = this.props
 
     return (
       <div className="task">
         <span className="title-task">Задание 1</span>
+        <span>
+          Написать утилиту проверки на равенство данных (ФИО и дата), не
+          учитывая порядок и прочие символы
+        </span>
         <InputUserData
           id="firstInputData"
           label="Первый ввод"
-          onChange={this.saveFirstData}
+          onChange={this.saveFirstValue}
           isNotValid={isNotValidFirstValue}
         />
         <InputUserData
           id="secondInputData"
           label="Второй ввод"
-          onChange={this.saveSecondData}
+          onChange={this.saveSecondValue}
           isNotValid={isNotValidSecondValue}
         />
 
@@ -98,4 +101,17 @@ export class CompareUserData extends Component {
       </div>
     )
   }
+}
+
+CompareUserData.propTypes = {
+  changeFirstUserData: PropTypes.func,
+  changeSecondUserData: PropTypes.func,
+  changeFirstValidStatus: PropTypes.func,
+  changeSecondValidStatus: PropTypes.func,
+  changeStatusComparison: PropTypes.func,
+  firstValue: PropTypes.string,
+  secondValue: PropTypes.string,
+  isNotValidFirstValue: PropTypes.bool,
+  isNotValidSecondValue: PropTypes.bool,
+  isEqualUserData: PropTypes.bool,
 }
