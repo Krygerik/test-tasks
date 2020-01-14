@@ -28,9 +28,7 @@ export class CompareUserData extends Component {
     const {
       firstValue,
       secondValue,
-      changeFirstValidStatus,
-      changeSecondValidStatus,
-      changeStatusComparison,
+      changeValidationStatusesAction,
     } = this.props
 
     const {
@@ -45,26 +43,29 @@ export class CompareUserData extends Component {
       error: secondError,
     } = this.getCutedUserData(secondValue)
 
-    changeFirstValidStatus(firstError)
-    changeSecondValidStatus(secondError)
-
-    if (!firstError && !secondError) {
-      changeStatusComparison(firstFio === secondFio && firstDate === secondDate)
-    }
+    changeValidationStatusesAction({
+      firstStatus: firstError,
+      secondStatus: secondError,
+      compareStatus:
+        !firstError && !secondError
+          ? firstFio === secondFio && firstDate === secondDate
+          : undefined,
+    })
   }
 
-  saveFirstValue = event => {
-    this.props.changeFirstUserData(event.target.value)
-  }
+  saveInputValue = event => {
+    const { id, value } = event.target
 
-  saveSecondValue = event => {
-    this.props.changeSecondUserData(event.target.value)
+    this.props.changeInputValue({
+      [id]: value,
+      [id + 'IsNotValid']: false,
+    })
   }
 
   render() {
     const {
-      isNotValidFirstValue,
-      isNotValidSecondValue,
+      firstValueIsNotValid,
+      secondValueIsNotValid,
       isEqualUserData,
     } = this.props
 
@@ -76,16 +77,16 @@ export class CompareUserData extends Component {
           учитывая порядок и прочие символы
         </span>
         <InputUserData
-          id="firstInputData"
+          id="firstValue"
           label="Первый ввод"
-          onChange={this.saveFirstValue}
-          isNotValid={isNotValidFirstValue}
+          onChange={this.saveInputValue}
+          isNotValid={firstValueIsNotValid}
         />
         <InputUserData
-          id="secondInputData"
+          id="secondValue"
           label="Второй ввод"
-          onChange={this.saveSecondValue}
-          isNotValid={isNotValidSecondValue}
+          onChange={this.saveInputValue}
+          isNotValid={secondValueIsNotValid}
         />
 
         {isEqualUserData !== undefined &&
@@ -104,14 +105,11 @@ export class CompareUserData extends Component {
 }
 
 CompareUserData.propTypes = {
-  changeFirstUserData: PropTypes.func,
-  changeSecondUserData: PropTypes.func,
-  changeFirstValidStatus: PropTypes.func,
-  changeSecondValidStatus: PropTypes.func,
-  changeStatusComparison: PropTypes.func,
+  changeInputValue: PropTypes.func,
+  changeValidationStatusesAction: PropTypes.func,
   firstValue: PropTypes.string,
   secondValue: PropTypes.string,
-  isNotValidFirstValue: PropTypes.bool,
-  isNotValidSecondValue: PropTypes.bool,
+  firstValueIsNotValid: PropTypes.bool,
+  secondValueIsNotValid: PropTypes.bool,
   isEqualUserData: PropTypes.bool,
 }
