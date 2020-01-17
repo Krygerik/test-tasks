@@ -1,23 +1,28 @@
+// @flow
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 import {
-  changeInputValue,
+  changeFirstInputValue,
+  changeSecondInputValue,
   changeValidationStatuses,
+  type ChangeableStatusesType,
 } from '../actions/compareActions'
+import type { CompareStateType } from '../reducers/compare'
 import { CompareUserData } from '../components/CompareUserData'
 
-/**
- * @description
- * Компонент для сравнения данных в 2 полях ввода.
- * Сравниваемые данные: "имя фамилия" и "дата рождения" в формате dd.mm.yyyy
- * Порядок данных не учитывается, как и все прочие символы
- */
-export class CompareUserDataContainer extends Component {
+type CompareUserDataContainerPropsType = {
+  changeFirstInputValueAction: string => string,
+  changeSecondInputValueAction: string => string,
+  changeValidationStatusesAction: any => ChangeableStatusesType,
+  compare: CompareStateType,
+}
+
+export class CompareUserDataContainer extends Component<CompareUserDataContainerPropsType> {
   render() {
     const {
       compare,
-      changeInputValueAction,
+      changeFirstInputValueAction,
+      changeSecondInputValueAction,
       changeValidationStatusesAction,
     } = this.props
 
@@ -25,26 +30,15 @@ export class CompareUserDataContainer extends Component {
       <CompareUserData
         firstValue={compare.firstValue}
         secondValue={compare.secondValue}
-        changeInputValue={changeInputValueAction}
-        changeValidationStatusesAction={changeValidationStatusesAction}
+        changeFirstInputValue={changeFirstInputValueAction}
+        changeSecondInputValue={changeSecondInputValueAction}
+        changeValidationStatuses={changeValidationStatusesAction}
         firstValueIsNotValid={compare.firstValueIsNotValid}
         secondValueIsNotValid={compare.secondValueIsNotValid}
         isEqualUserData={compare.isEqualUserData}
       />
     )
   }
-}
-
-CompareUserDataContainer.propTypes = {
-  changeInputValueAction: PropTypes.func,
-  changeValidationStatusesAction: PropTypes.func,
-  compare: PropTypes.exact({
-    firstValue: PropTypes.string,
-    secondValue: PropTypes.string,
-    firstValueIsNotValid: PropTypes.bool,
-    secondValueIsNotValid: PropTypes.bool,
-    isEqualUserData: PropTypes.bool,
-  }),
 }
 
 const mapStateToProps = store => {
@@ -54,7 +48,10 @@ const mapStateToProps = store => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  changeInputValueAction: userData => dispatch(changeInputValue(userData)),
+  changeFirstInputValueAction: userData =>
+    dispatch(changeFirstInputValue(userData)),
+  changeSecondInputValueAction: userData =>
+    dispatch(changeSecondInputValue(userData)),
   changeValidationStatusesAction: statuses =>
     dispatch(changeValidationStatuses(statuses)),
 })

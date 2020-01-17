@@ -14,8 +14,10 @@
     }
   },
   "rules": {
-    "jsx-quotes": [1, "prefer-double"]
+    "jsx-quotes": [1, "prefer-double"],
+    "flowtype/define-flow-type": 1,
+    "flowtype/use-flow-type": 1
   },
-  "plugins": ["prettier"],
+  "plugins": ["prettier", "flowtype"],
   "parser": "babel-eslint"
 }

@@ -1,16 +1,28 @@
+// @flow
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { InputUserData } from '../components/InputUserData'
+import { InputUserData } from './InputUserData'
+import type { ChangeableStatusesType } from '../actions/compareActions'
 import '../styles/CompareUserData.css'
 
-export class CompareUserData extends Component {
-  /**
-   * @description
-   * Функция для поиска и взятия даты и фио из переданной строки.
-   * Также валидирует строку на наличие данных аттрибутов
-   * @param {string} inputData
-   */
-  getCutedUserData = inputData => {
+type CompareUserDataPropsType = {
+  +changeFirstInputValue: string => any,
+  +changeSecondInputValue: string => any,
+  +changeValidationStatuses: any => ChangeableStatusesType,
+  +firstValue: string,
+  +secondValue: string,
+  +firstValueIsNotValid: boolean,
+  +secondValueIsNotValid: boolean,
+  +isEqualUserData?: boolean,
+}
+
+type CutedInputValueType = {|
+  fio: string | null,
+  date: string | null,
+  error: boolean,
+|}
+
+export class CompareUserData extends Component<CompareUserDataPropsType> {
+  getCutedUserData = (inputData: string): CutedInputValueType => {
     const RegExp_DATE = /\d{2}.\d{2}.\d{4}/
     const RegExp_FIO = /[а-яА-Я]+ [а-яА-Я]+ [а-яА-Я]+/
 
@@ -25,11 +37,7 @@ export class CompareUserData extends Component {
   }
 
   handlerCompareData = () => {
-    const {
-      firstValue,
-      secondValue,
-      changeValidationStatusesAction,
-    } = this.props
+    const { firstValue, secondValue, changeValidationStatuses } = this.props
 
     const {
       fio: firstFio,
@@ -43,23 +51,26 @@ export class CompareUserData extends Component {
       error: secondError,
     } = this.getCutedUserData(secondValue)
 
-    changeValidationStatusesAction({
-      firstStatus: firstError,
-      secondStatus: secondError,
-      compareStatus:
+    changeValidationStatuses({
+      firstValueIsNotValid: firstError,
+      secondValueIsNotValid: secondError,
+      isEqualUserData:
         !firstError && !secondError
           ? firstFio === secondFio && firstDate === secondDate
           : undefined,
     })
   }
 
-  saveInputValue = event => {
-    const { id, value } = event.target
+  saveFirstInputValue = (
+    event: SyntheticInputEvent<HTMLInputElement>
+  ): void => {
+    this.props.changeFirstInputValue(event.currentTarget.value)
+  }
 
-    this.props.changeInputValue({
-      [id]: value,
-      [id + 'IsNotValid']: false,
-    })
+  saveSecondInputValue = (
+    event: SyntheticInputEvent<HTMLInputElement>
+  ): void => {
+    this.props.changeSecondInputValue(event.currentTarget.value)
   }
 
   render() {
@@ -79,13 +90,13 @@ export class CompareUserData extends Component {
         <InputUserData
           id="firstValue"
           label="Первый ввод"
-          onChange={this.saveInputValue}
+          onChange={this.saveFirstInputValue}
           isNotValid={firstValueIsNotValid}
         />
         <InputUserData
           id="secondValue"
           label="Второй ввод"
-          onChange={this.saveInputValue}
+          onChange={this.saveSecondInputValue}
           isNotValid={secondValueIsNotValid}
         />
 
@@ -102,14 +113,4 @@ export class CompareUserData extends Component {
       </div>
     )
   }
-}
-
-CompareUserData.propTypes = {
-  changeInputValue: PropTypes.func,
-  changeValidationStatusesAction: PropTypes.func,
-  firstValue: PropTypes.string,
-  secondValue: PropTypes.string,
-  firstValueIsNotValid: PropTypes.bool,
-  secondValueIsNotValid: PropTypes.bool,
-  isEqualUserData: PropTypes.bool,
 }

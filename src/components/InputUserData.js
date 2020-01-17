@@ -1,8 +1,15 @@
+// @flow
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import '../styles/InputUserData.css'
 
-export class InputUserData extends Component {
+type InputPropsType = {
+  +id: string,
+  +label: string,
+  +onChange: any => any,
+  +isNotValid: boolean,
+}
+
+export class InputUserData extends Component<InputPropsType> {
   render() {
     const { id, label, onChange, isNotValid } = this.props
 
@@ -22,11 +29,4 @@ export class InputUserData extends Component {
       </div>
     )
   }
-}
-
-InputUserData.propTypes = {
-  id: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  isNotValid: PropTypes.bool.isRequired,
 }

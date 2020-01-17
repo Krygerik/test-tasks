@@ -1,3 +1,4 @@
+// @flow
 import { compareReducer } from './compare'
 import { combineReducers } from 'redux'
 
