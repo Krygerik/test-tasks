@@ -1,0 +1,67 @@
+.priceForm {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.priceForm label {
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.priceForm input {
+    height: 30px;
+    text-align: center;
+}
+
+.minMaxInput {
+    width: 50%;
+}
+
+.minMaxInput input.error {
+    border: 2px solid red;
+}
+
+.minMaxInput span {
+    color: red;
+    text-align: center;
+}
+
+.priceInput {
+    width: 100%;
+}
+
+.priceInput>div {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.priceField {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.priceInput input {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.priceInput input.error {
+    border: 2px solid red;
+}
+
+.priceInput span {
+    color: red
+}
+
+.priceForm button {
+    height: 3em;
+    padding: 10px;
+    font-size: 16px;
+    margin-top: 10px;
+    cursor: pointer;
+}

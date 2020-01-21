@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react'
 import CompareUserDataContainer from '../containers/CompareUserDataContainer'
+import PriceValidation from './PriceValidation'
 import '../styles/App.css'
 
 export default class App extends Component<{}> {
@@ -11,6 +12,7 @@ export default class App extends Component<{}> {
           <h1>Тестовые задания</h1>
         </div>
         <CompareUserDataContainer />
+        <PriceValidation />
       </div>
     )
   }
