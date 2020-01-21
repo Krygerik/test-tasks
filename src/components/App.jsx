@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import CompareUserDataContainer from '../containers/CompareUserDataContainer'
 import PriceValidation from './PriceValidation'
-import '../styles/App.css'
+import './App.css'
 
 export default class App extends Component<{}> {
   render() {

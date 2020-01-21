@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { InputUserData } from './InputUserData'
 import type { ChangeableStatusesType } from '../actions/compareActions'
-import '../styles/CompareUserData.css'
+import './CompareUserData.css'
 
 type CompareUserDataPropsType = {
   +changeFirstInputValue: string => any,

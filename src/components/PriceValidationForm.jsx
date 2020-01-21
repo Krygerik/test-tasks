@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import { reduxForm, Field } from 'redux-form'
-import '../styles/PriceValidation.css'
+import './PriceValidation.css'
 
 type PriceValidationFormPropsType = {
   handleSubmit: any => any,

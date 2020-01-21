@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-import '../styles/InputUserData.css'
+import './InputUserData.css'
 
 type InputPropsType = {
   +id: string,
