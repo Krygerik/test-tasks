@@ -45,8 +45,10 @@
     "webpack-dev-server": "^3.10.0"
   },
   "lint-staged": {
+    "./src/*.{js, jsx}": [
+      "eslint src/ --max-warnings=0"
+    ],
     "*.{js, jsx}": [
-      "eslint src/ --max-warnings=0",
       "prettier --write '**/*.js'",
       "git add"
     ]
